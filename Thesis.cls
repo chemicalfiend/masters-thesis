@@ -275,7 +275,7 @@ supervision.\\[2.5cm]
    pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
 
 \usepackage[toc]{glossaries}
-\glossarystyle{long}
+%\glossarystyle{long}
 \makeglossaries
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
