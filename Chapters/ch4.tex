@@ -9,6 +9,13 @@
 
 \section{Introduction}
 
+If we want to understand the electronic properties of materials, our limited understanding of analytically solvable quantum systems does not get us very far. There's only a limited number of systems with analytical solutions.
+
+As in the case of classical mechanics, any realistic depiction of quantum systems would require understanding how the system couples with an environment, which influences it heavily. Open quantum system theory hence helps us with this problem since we can learn what happens to systems that interact with an environment and how that affects their dynamics. The easiest models of open quantum systems are called "system-bath" models where you have a (reasonably) solvable system coupled to a bath that represents the effects of an environment.
+
+For studying electron-phonon systems, we need to construct models whereby we can understand what happens to the electrons when they interact with an ionic lattice as an environment. This chapter starts by covering the general theory of open quantum systems and the best ways to treat their evolution. We then move on to the path integral formulation and discuss how that helps us with the quantum dynamics of system-bath models. Once we have constructed these path integral equations, we move onto evaluating the path integrals using Monte Carlo simulations. 
+
+
 \section{Dynamics of Open Quantum Systems}
 
 \subsection{Liouville-von Neumann Equation}
@@ -20,15 +27,36 @@
 \subsection{Adiabatic and Markov Approximations}
 
 
-\section{Path Integral Formulation}
+\section{Path Integral Treatment of Open Quantum Systems}
 
-\section{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+% Why are path integrals useful for treating quantum systems.
+% S + R  => Influence Functionals.
 
-\section{Quantum-Classical Path Integral (QCPI)}
+\section{Imaginary Time Path Integral Monte-Carlo}
 
-\section{Evaluating Path Integrals}
+% Wick rotation, then reduces to canonical ensemble problem, then just sample the integral.
 
-\section{Calculating Relevant Properties}
+% Also discuss the problems with imaginary time PIMC.
+
+
+\section{Real Time Path Integral Dynamics}
+
+% Start by discussing the sign problem in real-time PIMC
+
+\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+
+\subsection{Quantum-Classical Path Integral (QCPI)}
+
+\subsection{Evaluating the Real-Time Path Integrals}
+
+\section{Analytic Continuation Method}
+
+\section{Determining Observables}
 
 \subsection{Mobility}
+
+\subsection{Polaron Radius}
+
+\subsection{Self-Energy}
+
 
