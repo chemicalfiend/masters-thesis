@@ -18,19 +18,107 @@ For studying electron-phonon systems, we need to construct models whereby we can
 
 \section{Dynamics of Open Quantum Systems}
 
+For isolated quantum systems, the dynamics can be described by the time-dependent Schr{\"o}dinger equation (TDSE): \begin{equation}\label{4.1} -i\hbar \frac{\partial}{\partial t} \ket{\Psi(x, t)} = \mathcal{H} \ket{\Psi(x, t)}\end{equation}
+
+The average values of a time-dependent observable A is given by \begin{equation} \label{4.2} A(t) = \bra{\Psi(t)} \hat{A} \ket{\Psi(t)} \end{equation}
+
+One of our objectives is to figure out how a quantum-mechanical system moves from an initial state $t_0$ to a final state. A convenient tool to describe the states of macroscopic systems that can be formed from a mixture of pure states $\{ \Psi_{\nu} \}$ is the density operator $\hat{W}$, given by \begin{equation} \label{4.3} \hat{W} = \sum_{\nu} w_{\nu} \ket{\Psi_{\nu}} \bra{\Psi_{\nu}} \end{equation}which is a summation over the projection operators onto the pure states with a probability weight of $w_{\nu}$. Expectations for observables can now be determined by : $<\hat{A}> = Tr\{ \hat{W} \hat{A}\}$.
+
+First let us try to construct an equation of motion for the density operator. 
+
 \subsection{Liouville-von Neumann Equation}
+
+John von Neumann extended the classical Lioville equation for phase space trajectories to quantum statistics.
+
+The time propagation of the wavefunctions in eq. \ref{4.1} can be written as \begin{equation} \label{4.4} \ket{\Psi(t)} = U(t, t_0) \ket{\Psi(t_0)} \end{equation} where $$U(t, t_0) = \exp(-\frac{i \mathcal{H}(t - t_0)}{\hbar})$$.
+
+We can substitute eq \ref{4.4} in in eq \ref{4.3} to obtain a time-dependent equation for the density operator.
+
+\begin{equation} \label{4.5}
+    \hat{W}(t) = \sum_{\nu} w_{\nu} U(t, t_0) \ket{\Psi(t_0)} \bra{\Psi(t_0)} U^{\dag}(t, t_0) = \sum_{\nu} U(t, t_0) W(t_0) U^{\dag}(t, t_0)
+\end{equation}
+
+To derive a time-derivative equation, take a partial derivative on both sides with respect to t:
+
+\begin{equation} \label{4.6}
+    \frac{\partial}{\partial t} \hat{W}(t) = -\frac{i}{\hbar}(\mathcal{H} \hat{W} - \hat{W} \mathcal{H}) = -\frac{i}{\hbar}[\mathcal{H}, \hat{W}(t)]
+\end{equation}
+
+Equation \ref{4.6} is called the Liouville-von Neumann equation and is the simplest equation for the evolution of macroscopic quantum systems. For brevity we can use the notation of super-operator $\mathcal{L} = \frac{1}{\hbar}[H, (.)]$ to get $$\frac{\partial}{\partial t} \hat{W} = -i \mathcal{L} \hat{W}$$
 
 \subsection{System-Bath Models and The Reduced Density Matrix}
 
-\subsection{Quantum Master Equations}
+For models where we have a system coupled to a bath, we will represent our Hamiltonian in the form : 
 
-\subsection{Adiabatic and Markov Approximations}
+\begin{equation} \label{4.7}
+    \mathcal{H} = \mathcal{H}_S + \mathcal{H}_R + \mathcal{H}_{int}
+\end{equation}
+
+Where $\mathcal{H}_S$ is the Hamiltonian of the relevant system, represented only in terms of system coordinates $s = \{s_j\}$ and momenta $p = \{p_j\}$, $\mathcal{H}_R$ is the Hamiltonian of the reservoir having coordinates $Z = \{Z_{\xi}\}$ and momenta $P = \{P_{\xi}\}$. $\mathcal{H}_{int}$ is the linear coupling term of the system and the reservoir. 
+
+For harmonic baths, the reservoir Hamiltonian reads $$\mathcal{H}_{R} = \sum_{\xi} \frac{P_{\xi}^2}{2M} + \frac{1}{2}M \omega_{\xi}^2$$
+
+
+%\subsection{Quantum Master Equations}
+
+%\subsection{Adiabatic and Markov Approximations}
 
 
 \section{Path Integral Treatment of Open Quantum Systems}
 
 % Why are path integrals useful for treating quantum systems.
 % S + R  => Influence Functionals.
+
+
+For a general Hamiltonian in cartesian co-ordinates $$\mathcal{H} = \sum_{j} \frac{p_j^2}{2m_j} + V(x_1, ..., x_n)$$
+
+To propagate this system from an initial ($t_0$, $x_0$) to a final ($t_f$, $x_f$), let us split the time scale t into N short time chunks $\Delta t \equiv \frac{t}{N}$. Now the time-evolution operator can be written as :
+
+\begin{equation} \label{4.x}
+    e^{-i\mathcal{H}t/\hbar} = e^{-i\mathcal{H}\Delta t/\hbar}...e^{-i\mathcal{H}\Delta t/\hbar} = \prod_{k=1}^{N} e^{-i\mathcal{H}(t_k - t_{k-1})/\hbar}
+\end{equation}
+
+where $t_k = kt/N$. 
+
+Using $$\int dx_k \ket{\psi_k}\bra{\psi_k} = 1$$ between successive steps we get :
+
+\begin{equation} \label{4.xx}
+    \bra{x_f} e^{-i\mathcal{H}t/\hbar} \ket{x_0} = \int dx_1 ... \int dx_{N-1} \prod_{k=1}^{N} \bra{x_k} e^{-i\mathcal{H}(t_k - t_{k-1})/\hbar} \ket{x_{k-1}}
+\end{equation}
+
+This is an exact representation for any value of N. $x_f \equiv x_N$ is the final point in the  propagation.
+
+To evaluate this integral, we need an approximation to evaluate the short time propagator in a time-step $\Delta t$. If operators A and B do not commute, we cannot use the rule of exponential of a sum of operators equals the product of exponentials of the operators. The expansion of $e^{A+B}$ developed by Suzuki and Trotter helps us alleviate this problem. They found that :
+
+\begin{equation}\label{4.x}
+e^{\delta(A + B)} = e^{\delta A}e^{\delta B} + O(\delta^2)
+\end{equation}
+
+The error term $O(\delta^2)$ vanishes when we take the limit of $\delta \to 0$.
+
+As a guess way to split the Hamiltonian if we separate out the kinetic term $\mathcal{T}$ and the potential term $\mathcal{V}$ in the following way :
+
+\begin{equation}\label{4.x}
+e^{-i\mathcal{H}\Delta t/\hbar} \approx e^{-i\mathcal{V}\Delta t/2\hbar}e^{-i\mathcal{T}\Delta t/\hbar}e^{-i\mathcal{V}\Delta t/2\hbar} 
+\end{equation}
+
+We can evaluate the kinetic part exactly to get :
+
+\begin{equation} \label{4.x}
+\bra{x_k}e^{-i\mathcal{H} \Delta t/\hbar}\ket{x_{k-1}} = \prod_{j=1}^{n} (\frac{m_j}{2\pi i \hbar \Delta t})^{1/2} \exp(\frac{i}{\hbar} \frac{m_j}{2\Delta t} (x_{j,k} - x_{j, k-1})^2)
+\end{equation}
+
+Plugging this into the propagation expression we get :
+
+\begin{equation} \label{4.x}
+    \begin{split}
+        \bra{x_f} e^{-i\mathcal{H}t/\hbar} \ket{x_0} & \approx \prod_{j=1}^{n} (\frac{m_j N}{2\pi i \hbar t})^{1/2}  \int d^n x_1 ... \int d^n x_{N-1} \\ & \exp(\frac{i}{\hbar} \sum_{k=1}^{N} (\sum_{j=1}^{n} \frac{m_j N}{2t} (x_{j,k} - x_{j, k-1})^2 - \frac{t}{2N}[\mathcal{V}(x_k) + \mathcal(V_{k-1})]))
+    \end{split}
+\end{equation}
+
+This equation is the "primitive" discretized path integral expression. As we use more sophisticated methods to split the Hamiltonian we will get better discretized expressions to work with.
+
+When we take the limit of $N \to \infty$, we get an equality.  
 
 \section{Imaginary Time Path Integral Monte-Carlo}
 
@@ -43,7 +131,16 @@ For studying electron-phonon systems, we need to construct models whereby we can
 
 % Start by discussing the sign problem in real-time PIMC
 
+One of the major issues with performing real-time path integral monte carlo simulations is the infamous sign problem. % Find a good explanation for this.
+
+To alleviate the sign problem, we employ a method developed by Makri and co-workers  to develop equations that converge when attempting to numerically sample the integrals. 
+
 \subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+
+
+
+
+
 
 \subsection{Quantum-Classical Path Integral (QCPI)}
 
