@@ -1,13 +1,9 @@
 % Chapter Template
 
-\chapter{Path Integrals and Quantum Dynamics} % Main chapter title
-
-\label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
-
-\lhead{Chapter 4. \emph{Path Integrals and Quantum Dynamics}} % Change X to a consecutive number; this is for the header on each page - perhaps a shortened titl
+\section{Path Integrals and Quantum Dynamics} % Main chapter title
 
 
-\section{Introduction}
+\subsection{Introduction}
 
 If we want to understand the electronic properties of materials, our limited understanding of analytically solvable quantum systems does not get us very far. There's only a limited number of systems with analytical solutions.
 
@@ -16,7 +12,7 @@ As in the case of classical mechanics, any realistic depiction of quantum system
 For studying electron-phonon systems, we need to construct models whereby we can understand what happens to the electrons when they interact with an ionic lattice as an environment. This chapter starts by covering the general theory of open quantum systems and the best ways to treat their evolution. We then move on to the path integral formulation and discuss how that helps us with the quantum dynamics of system-bath models. Once we have constructed these path integral equations, we move onto evaluating the path integrals using Monte Carlo simulations. 
 
 
-\section{Dynamics of Open Quantum Systems}
+\subsection{Dynamics of Open Quantum Systems}
 
 For isolated quantum systems, the dynamics can be described by the time-dependent Schr{\"o}dinger equation (TDSE): \begin{equation}\label{4.1} -i\hbar \frac{\partial}{\partial t} \ket{\Psi(x, t)} = \mathcal{H} \ket{\Psi(x, t)}\end{equation}
 
@@ -26,7 +22,7 @@ One of our objectives is to figure out how a quantum-mechanical system moves fro
 
 First let us try to construct an equation of motion for the density operator. 
 
-\subsection{Liouville-von Neumann Equation}
+\subsubsection{Liouville-von Neumann Equation}
 
 John von Neumann extended the classical Lioville equation for phase space trajectories to quantum statistics.
 
@@ -46,7 +42,7 @@ To derive a time-derivative equation, take a partial derivative on both sides wi
 
 Equation \ref{4.6} is called the Liouville-von Neumann equation and is the simplest equation for the evolution of macroscopic quantum systems. For brevity we can use the notation of super-operator $\mathcal{L} = \frac{1}{\hbar}[H, (.)]$ to get $$\frac{\partial}{\partial t} \hat{W} = -i \mathcal{L} \hat{W}$$
 
-\subsection{System-Bath Models and The Reduced Density Matrix}
+\subsubsection{System-Bath Models and The Reduced Density Matrix}
 
 For models where we have a system coupled to a bath, we will represent our Hamiltonian in the form : 
 
@@ -98,12 +94,8 @@ If we have an electron interacting with a bath of harmonic modes with frequencie
 
 Where $g_{\xi}$ is the coupling coefficient for each mode. 
 
-\subsection{Quantum Master Equations}
 
-\subsection{Adiabatic and Markov Approximations}
-
-
-\section{Path Integral Treatment of Open Quantum Systems}
+\subsection{Path Integral Treatment of Open Quantum Systems}
 
 % Why are path integrals useful for treating quantum systems.
 % S + R  => Influence Functionals.
@@ -169,27 +161,27 @@ We cannot use monte carlo methods to sample the primitive discretization of the 
 
 We take three approaches to try and deal with this. The first is to substitute the time term with another variable so that the phase factor (and consequently the integrand) becomes real. The second approach is to use a better Trotter splitting scheme to generate well-behaved propagators to simulate long time dynamics. The third uses a method from complex analysis known as "analytic continuation" to determine the observables of interest.
 
-\section{Imaginary Time Path Integral Monte-Carlo}
+\subsection{Imaginary Time Path Integral Monte-Carlo}
 
 This is the first of the approaches we take to tackle the sign problem that arises in evaluating path integrals using monte carlo simulations. 
 
 
 
 
-\section{Real Time Path Integral Dynamics}
+\subsection{Real Time Path Integral Dynamics}
 
 
 One of the major issues with performing real-time path integral monte carlo simulations is the infamous sign problem, as mentioned earlier. 
 To alleviate the sign problem, we employ a method developed by Makri and co-workers [QuAPI and QCPI citations]  to develop equations that converge when attempting to numerically sample discretized path integral expressions using Monte Carlo simulations.
 
-\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+\subsubsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
 
 
 
 
 
 
-\subsection{Quantum-Classical Path Integral (QCPI)}
+\subsubsection{Quantum-Classical Path Integral (QCPI)}
 
 \subsection{Evaluating the Real-Time Path Integrals}
 

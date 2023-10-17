@@ -1,0 +1,100 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thesis / Project Report
+% LaTeX Template
+% Version 2.0 (08/04/16)
+%
+% Author:
+% Siddhant Shrivastava
+% https://github.com/sidcode/bits-pilani-thesis-template-latex
+%
+% This template is heavily based on the work of Darshit Shah, Steven Gunn and Sunil Patel
+% Darshit Shah
+% https://github.com/darnir/BPHC-LaTeX-Report-Class
+% Steven Gunn
+% http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/
+% and
+% Sunil Patel
+% http://www.sunilpatel.co.uk/thesis-template/
+%
+% License:
+% CC BY-NC-SA 4.0 (http://creativecommons.org/licenses/by-nc-sa/4.0/)
+%
+% Note:
+% Make sure to edit document variables in the Thesis.cls file
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%-------------------------------------------------------------------------------
+
+\documentclass[11pt, a4paper, oneside]{article} % Paper size, default font size
+               
+\title{Determining the Mobility of Charge Carriers in Organic Semiconductors}
+
+\author{Pranay Venkatesh \\ 2019B2A11004P}
+
+\date{17 Oct 2023}
+
+
+% and one-sided paper
+
+\usepackage{graphicx}
+
+\usepackage[backend=biber]{biblatex}
+
+\usepackage{mathrsfs}
+
+\usepackage{physics}
+
+\usepackage{amsmath}
+
+\usepackage[margin=1.5cm]{geometry}
+
+\bibliography{Bibliography.bib}
+
+\begin{document}
+
+
+
+% Define page headers using FancyHdr package and set up for one-sided printing
+
+                  %FancyHdr headers
+
+% Input all the variables used in the document. Please fill out the
+% variables.tex file with all your details.
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+%-------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%-------------------------------------------------------------------------------
+
+
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\input{ch4}
+\input{ch6}
+%\input{Chapters/Chapter4}
+%\input{Chapters/Chapter5}
+%\input{Chapters/Chapter6}
+%\input{Chapters/Chapter7}
+
+%-------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%-------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+
+\label{Bibliography}
+
+
+\printbibliography
+
+\end{document}
