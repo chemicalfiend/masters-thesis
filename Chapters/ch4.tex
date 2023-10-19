@@ -90,7 +90,7 @@ The matrix elements of the RDO can be defined using any basis that represents th
 
 This defines the elements of the Reduced Density Matrix (RDM).
 
-If we have an electron interacting with a bath of harmonic modes with frequencies $\{\omega_i\}$, then we can abstract out the effect of this bath using the spectral density function:
+If we have an electron interacting with a bath of harmonic modes with frequencies $\{\omega_i\}$, then we can abstract out the effect of this bath using the spectral density function \cite{maykuhn}:
 
 \begin{equation}
     J(\omega) = \sum_{\xi} g_{\xi}^2 \delta(\omega - \omega_{\xi})
@@ -98,9 +98,9 @@ If we have an electron interacting with a bath of harmonic modes with frequencie
 
 Where $g_{\xi}$ is the coupling coefficient for each mode. 
 
-\subsection{Quantum Master Equations}
+%\subsection{Quantum Master Equations}
 
-\subsection{Adiabatic and Markov Approximations}
+%\subsection{Adiabatic and Markov Approximations}
 
 
 \section{Path Integral Treatment of Open Quantum Systems}
@@ -127,7 +127,7 @@ Using $$\int dx_k \ket{\psi_k}\bra{\psi_k} = 1$$ between successive steps we get
 
 This is an exact representation for any value of N. $x_f \equiv x_N$ is the final point in the  propagation.
 
-To evaluate this integral, we need an approximation to evaluate the short time propagator in a time-step $\Delta t$. If operators A and B do not commute, we cannot use the rule of exponential of a sum of operators equals the product of exponentials of the operators. The expansion of $e^{A+B}$ developed by Suzuki and Trotter helps us alleviate this problem. They found that :
+To evaluate this integral, we need an approximation to evaluate the short time propagator in a time-step $\Delta t$. If operators A and B do not commute, we cannot use the rule of exponential of a sum of operators equals the product of exponentials of the operators. The expansion of $e^{A+B}$ developed by Suzuki and Trotter \cite{trotter1959} helps us alleviate this problem. They found that :
 
 \begin{equation}\label{4.x}
 e^{\delta(A + B)} = e^{\delta A}e^{\delta B} + O(\delta^2)
@@ -163,7 +163,7 @@ When we take the limit of $N \to \infty$, we get an equality.
     \bra{x_f} e^{-i\mathcal{H}t/\hbar}\ket{x_0} = \int \mathcal{D}x \exp(\frac{i}{\hbar} S[x])
 \end{equation}
 
-Where $S[x]$ is the action functional $\int \mathcal{L}[x, t] dt$ of the path. This is the well-known Feynman path integral expression. We will however be dealing with discretized path integral expressions to understand the dynamics of systems we're interested in.
+Where $S[x]$ is the action functional $\int \mathcal{L}[x, t] dt$ of the path. This is the well-known Feynman path integral expression. \cite{feynhibbs} We will however be dealing with discretized path integral expressions to understand the dynamics of systems we're interested in.
 
 We cannot use monte carlo methods to sample the primitive discretization of the path integral since it is a highly oscillatory function. Typically the phase terms cancel each other out dramatically in this oscillating function and Monte carlo schemes carried over long time periods fail to capture all the information necessary. This is called the Monte carlo "sign problem".
 
@@ -173,25 +173,62 @@ We take three approaches to try and deal with this. The first is to substitute t
 
 This is the first of the approaches we take to tackle the sign problem that arises in evaluating path integrals using monte carlo simulations. 
 
-
-
+To get the integrand to stop oscillating, we have to make the phase factor a real number. We do this by what is called a "Wick Rotation". By substituting time with imaginary time, we solve the problem of the phase factor being an imaginary number. Using $\beta = it/\hbar$, convert the phase term to $\exp(-\beta \mathcal{H})$. This is the standard expression for a system at thermal equilibrium (canonical ensemble) \cite{tuckerman2023statistical}. Discretized path integrals handle many-body problems at thermal equilibrium very well because they can be solved easily in imaginary time.
 
 \section{Real Time Path Integral Dynamics}
 
-
 One of the major issues with performing real-time path integral monte carlo simulations is the infamous sign problem, as mentioned earlier. 
-To alleviate the sign problem, we employ a method developed by Makri and co-workers [QuAPI and QCPI citations]  to develop equations that converge when attempting to numerically sample discretized path integral expressions using Monte Carlo simulations.
+To alleviate the sign problem, we employ a method developed by Makri and co-workers \cite{quapi} to develop equations that converge when attempting to numerically sample discretized path integral expressions using Monte Carlo simulations.
 
-\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+%\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+
+ If we instead performed the Trotter decomposition as such : 
+ \begin{equation}
+\mathcal{H} = \mathcal{H}_{ref} + \mathcal{H}_{int}
+ \end{equation}
+
+Where $\mathcal{H}_{ref}$ can be decomposed into solvable 1-D or 2-D systems ($\mathcal{H}_0$) 
+
+Then apply Trotter splitting : 
+
+\begin{equation}
+e^{-i \mathcal{H} \Delta t /\hbar} \approx e^{-i\mathcal{H}_{int}\Delta t / 2\hbar}e^{-i\mathcal{H}_{ref}\Delta t / \hbar}e^{-i\mathcal{H}_{int}\Delta t / 2\hbar}
+\end{equation}
+
+The step-wise propagator elements become:
+
+\begin{equation}
+\bra{x_k}e^{-i \mathcal{H} \Delta t / \hbar} \ket{x_{k-1}} = \bra{x_k}e^{-i \mathcal{H}_{ref} \Delta t / \hbar}\ket{x_{k-1}}  \exp(\frac{-i \Delta t}{2 \hbar}(\mathcal{H}_{int}(x_k) + \mathcal{H}_{int}(x_{k-1})))
+\end{equation}
+
+This is called the \emph{Quasi-Adiabatic Propagator}.
+
+Since $\mathcal{H}_{ref}$ can be decomposed to a set of solvable 1D or 2D problems $\mathcal{H}_0$, we will assume that we have these solutions in hand when carrying out the monte carlo computation of the dynamics.
 
 
+If the eigenvalues of $\mathcal{H}_0$ are $E_m$ and the eigenvectors are $\Phi_m$, then :
 
+\begin{equation}
+\bra{x_k}e^{-i \mathcal{H}_{0} \Delta t / \hbar}\ket{x_{k-1}} = \sum_{m}^{m_{max}} \Phi_m (x_k) \Phi_m(x_{k-1}) e^{-iE_{m}\Delta t / \hbar}
+\end{equation}
 
+For a finite value of $m_{max}$ we get converging solutions of the effective propagator.
 
+Now we can propagate the reduced density matrix elements over time :
 
-\subsection{Quantum-Classical Path Integral (QCPI)}
+\begin{equation}
+\begin{split}
+\rho(s, s', t) = & \int ds_0^{+} \int ds_1^{+} ... \int ds_{N-1}^{+} \int ds_{0}^{-} ... \int ds_{N-1}^{-} \\ &  <s'|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_{N-1}^{+}> ... <s_1^{+}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_0^{+}> \\ & <s_0^{+}|\rho(0)|s_0^{-}> <s_0^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_1^{-}> ...<s_{N-1}^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s>I(s', s, s_i^{+}, s_i^{-} ; \Delta t)
+\end{split}
+\end{equation}
 
-\subsection{Evaluating the Real-Time Path Integrals}
+This is the Quasi-Adiabatic Propagator Path Integral (QuAPI) expression. Here $I$ represents the influence functional, capturing the effect of the reservoir \cite{feynman2000theory}. 
+
+To sample the grid points, we perform a Monte Carlo random walk over a 2N dimensional grid, since we integrate over 2N dimensions considering both the forward and backward paths 
+
+%\subsection{Quantum-Classical Path Integral (QCPI)}
+
+%\subsection{Evaluating the Real-Time Path Integrals}
 
 \subsection{Determining Observables}
 
@@ -205,7 +242,7 @@ For determining the mobility of the polarons in these systems we use the Einstei
 
 Where $\mu$ is the mobility, q is the charge, D is the diffusion coefficient and $\beta = \frac{1}{k_B T}$. 
 
-For getting the mobility we use a method developed by Blumberger and co-workers [Blumberger mobility cite]. 
+For getting the mobility we use a method developed by Blumberger and co-workers \cite{blumberger} 
 
 The diffusion coefficient can be got from the Mean Square Displacement (MSD) as follows: 
 
@@ -215,7 +252,7 @@ D = \frac{1}{2} \lim_{t \to \infty} \frac{dMSD}{dt}
 
 In the diffusive regime, the MSD is a linear function of time, so we simply take the slope of MSD vs t calculations for calculating mobility.
 
-There are multiple definitions for how to compute the MSD for quantum dynamics simulations [cite relevant papers] but we have chosen to use the following:
+There are multiple definitions for how to compute the MSD for quantum dynamics simulations but we have chosen to use the following:
 
 \begin{equation}
     MSD(t) = \sum_{k=1}^{M} P_{k}(t) (x_{k}(t) - x(0))^2
@@ -223,13 +260,13 @@ There are multiple definitions for how to compute the MSD for quantum dynamics s
 
 Here, $P_k(t) = \rho_{kk}$ is the population of site k at time t. This calculation of MSD is typically averaged over multiple simulations of the dynamics calculation.
 
-\subsubsection{Polaron Radius}
+%\subsubsection{Polaron Radius}
 
-\subsubsection{Self-Energy}
+%\subsubsection{Self-Energy}
 
 \section{Analytic Continuation Method}
 
-We can also obtain the mobility of polarons using a combination of imaginary and (short) real time path integral monte carlo simulations using an analytic continuation [Vukmirovic ref]. 
+We can also obtain the mobility of polarons using a combination of imaginary and (short) real time path integral monte carlo simulations using an analytic continuation \cite{miladic2023method}. 
 
  The Holstein polaron Hamiltonian for an electron coupled to phonon modes in a lattice is given by:
 

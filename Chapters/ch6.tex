@@ -10,13 +10,13 @@
 
 In this example, we model the dynamics of the pentacene dimer and tetramer using the path integral non-adiabatic dynamics techniques as mentioned.
 
-To study charge transfer processes in molecular aggregates, we use a one-dimensional nearest-neighbours (NN) Hamiltonian of the form [Borelli Ref]. :
+To study charge transfer processes in molecular aggregates, we use a one-dimensional nearest-neighbours (NN) Hamiltonian of the form \cite{borrelli}. :
 
 \begin{equation} \label{6.x}    
     \mathcal{H} = \sum_{n, m}^{N_e} \epsilon_{nm} \ket{n} \bra{m} + \sum_{k = 1}^{F} \frac{\omega_k}{2} (P_k^{2} + Z_k^{2}) + \sum_{n, k}^{N_e, F} g_k^{(n)} Z_k \ket{n}\bra{n}
 \end{equation}
 
-Here $\epsilon_{nm}$ represents the members of a matrix of electronic energies and couplings. For the nearest-neighbour pentacene model we are considering we use a value of $\epsilon_{12} = 300 cm^{-1}$. The "system" part of the Hamiltonian ($\mathcal{H}_s$) is described by the first term of electron couplings. The second term represents the energies of the vibrational modes, treated as harmonic in this case. The third term is the linear coupling between each electron and the vibrational mode at site k. The vibrational frequencies and linear coupling terms are determined by Density Functional Theory calculations [Borelli Hopping Ref]. 
+Here $\epsilon_{nm}$ represents the members of a matrix of electronic energies and couplings. For the nearest-neighbour pentacene model we are considering we use a value of $\epsilon_{12} = 300 cm^{-1}$. The "system" part of the Hamiltonian ($\mathcal{H}_s$) is described by the first term of electron couplings. The second term represents the energies of the vibrational modes, treated as harmonic in this case. The third term is the linear coupling between each electron and the vibrational mode at site k. The vibrational frequencies and linear coupling terms are determined by Density Functional Theory calculations. 
 
 The effects of the bath are taken into consideration by the spectral density. We model the interactions as an effective Debye spectral density with reorganization energy $\lambda = 100 cm^{-1}$ and characteristic frequency $\gamma = 50 cm^{-1}$.
 
@@ -26,9 +26,9 @@ The effects of the bath are taken into consideration by the spectral density. We
     \caption{Debye Spectral Density for Pentacene}
 \end{figure}
 
-Using calculations from the Quantum-Classical Path Integral method, we can see the propagation of the density matrix. We can use this data to obtain the populations of the various sites (diagonal elements) and the coherences between the sites (off-diagonal elements).
+Using calculations from the Quasi-Adiabatic Propagator Path Integral method, we can see the propagation of the density matrix. We can use this data to obtain the populations of the various sites (diagonal elements) and the coherences between the sites (off-diagonal elements).
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{Figures/pentacene_result}
 \caption{Density Matrix Elements of Pentacene dimer. (a) $\rho_{11}$ population of site 1 (b) $Re(\rho_{12})$ Real part of coherence (c) $Im(\rho_{12})$ Imaginary part of coherence}
@@ -44,7 +44,7 @@ Using calculations from the Quantum-Classical Path Integral method, we can see t
 
 \section{Rubrene}
 
-Here, we attempt to model the dynamics of the Holstein-Peierls polaron in rubrene using the model developed by Ordejon, et al [Ordejon citation], where the Hamiltonian is given by :
+Here, we attempt to model the dynamics of the Holstein-Peierls polaron in rubrene using the model developed by Ordejon, et al \cite{Ordejn2017}, where the Hamiltonian is given by :
 
 \begin{equation}
     \mathcal{H} = \sum_{M,N} \epsilon_{MN} a_M^{\dag}a_N + \sum_{Q = (Z,P)} \omega_{Q} (b_Q^{\dag} b_{Q} + \frac{1}{2}) + \sum_{Q, M, N} \omega_{Q} g_{MN}^{Q}(b_{-Q} + b_{Q}^{\dag})a_M^{\dag}a_N 
@@ -63,8 +63,8 @@ We consider a simplified 1-dimensional chain of 10 rubrene sites with interactio
 
 By evaluating the QuAPI integral using tensor-train Monte carlo computations, we obtain the values of the RDM elements over time. We can use the diagonal elements to get the site populations.
 
-\begin{figure}
-    \center
+\begin{figure}[h]
+    \centering
     \includegraphics[scale=0.4]{Figures/rubrene_result.png}
     \caption{Populations of various sites in rubrene over time}
 \end{figure}
