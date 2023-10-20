@@ -1,4 +1,4 @@
-% Chapter Template
+ Chapter Template
 
 \chapter{Path Integrals and Quantum Dynamics} % Main chapter title
 
@@ -98,9 +98,56 @@ If we have an electron interacting with a bath of harmonic modes with frequencie
 
 Where $g_{\xi}$ is the coupling coefficient for each mode. 
 
-%\subsection{Quantum Master Equations}
+\subsection{Quantum Master Equations}
 
-%\subsection{Adiabatic and Markov Approximations}
+\subsection{Adiabatic and Markov Approximations}
+
+\section{Small Polaron Mobility from Hopping Rates}
+
+\subsection{Marcus Hopping Rate Equation}
+
+\subsection{Solving the Master Equation}
+
+The Master Equation for Charge transport is :
+
+\begin{equation}
+\frac{dP_n}{dt} = \sum_{m \neq n} \Gamma_{mn} P_m(t) - \Gamma_{nm} P_n(t)
+\end{equation}
+
+Where $\Gamma_{mn}$ refers to the transfer rate (Adiabatic / Marcus hopping rate) and $P_n$ refer to the populations of the various sites. To get the populations of the sites at steady-state, we can reformulate this into a matrix equation :
+
+\begin{equation}
+    A_{mn} = \[ \begin{cases} 
+        \Gamma_{mn} & m\neq n \\
+      -\sum_{m} \Gamma_{nm} & m = n \\ 
+   \end{cases}
+\]
+\end{equation}
+
+Formulating this as a matrix equation :
+
+\begin{equation}
+    \textbf{A} \vec{P} = 0
+\end{equation}
+
+
+Which can be solved by determining the nullspace of the matrix A. To do this, we perform a Singular Value Decomposition (SVD) of the matrix A:
+
+\begin{equation}
+    \textbf{A} = \textbf{U \Sigma V}^{T}
+\end{equation}
+
+See Appendix C for more on Singular Value Decompositions.
+
+When computing the mobility of electrons under an electric field, we have to include the electric field into the Marucs hopping rate equation :
+
+\begin{equation}
+    \Delta E_{ij} = \epsilon_{i} - \epsilon_{j} - q \vec{F} . \vec{r}_{ij}
+\end{equation}
+
+Then, we use the Marcus hopping rate model to compute the elements of the matrix A  and find the populations of the states $P_m$ by performing an SVD on the matrix A. 
+
+\subsection{Determining Mobility}
 
 
 \section{Path Integral Treatment of Open Quantum Systems}
@@ -226,9 +273,9 @@ This is the Quasi-Adiabatic Propagator Path Integral (QuAPI) expression. Here $I
 
 To sample the grid points, we perform a Monte Carlo random walk over a 2N dimensional grid, since we integrate over 2N dimensions considering both the forward and backward paths 
 
-%\subsection{Quantum-Classical Path Integral (QCPI)}
+\subsection{Quantum-Classical Path Integral (QCPI)}
 
-%\subsection{Evaluating the Real-Time Path Integrals}
+\subsection{Evaluating the Real-Time Path Integrals}
 
 \subsection{Determining Observables}
 
@@ -260,9 +307,9 @@ There are multiple definitions for how to compute the MSD for quantum dynamics s
 
 Here, $P_k(t) = \rho_{kk}$ is the population of site k at time t. This calculation of MSD is typically averaged over multiple simulations of the dynamics calculation.
 
-%\subsubsection{Polaron Radius}
+\subsubsection{Polaron Radius}
 
-%\subsubsection{Self-Energy}
+\subsubsection{Self-Energy}
 
 \section{Analytic Continuation Method}
 
@@ -320,7 +367,7 @@ To perform the analytic continuation, we first discretize this integral equation
 \textbf{j} = \textbf{K . m}
 \end{equation}
 
-Where \textbf{j} represents the discretized current density TCF elements in real and imaginary time. \textbf{m} is the discretized representation of the real part of the mobility. \textbf{K} is a linear operator that takes care of the integral term. We need to get \textbf{m}, knowing \textbf{K} (from discrete fourier transforms) and \textbf{j} (from the real and imaginary time monte carlo calculations). We get \textbf{m} by performing a Singular Value Decomposition of \textbf{K} and using the factors to derive the elements of \textbf{m}. 
+Where \textbf{j} represents the discretized current density TCF elements in real and imaginary time. \textbf{m} is the discretized representation of the real part of the mobility. \textbf{K} is a linear operator that takes care of the integral term. We need to get \textbf{m}, knowing \textbf{K} (from discrete fourier transforms) and \textbf{j} (from the real and imaginary time monte carlo calculations). We get \textbf{m} by performing a Singular Value Decomposition of \textbf{K} (see Appendix C) and using the factors to derive the elements of \textbf{m}. 
 
 
 
