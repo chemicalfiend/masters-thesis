@@ -1,5 +1,3 @@
- Chapter Template
-
 \chapter{Path Integrals and Quantum Dynamics} % Main chapter title
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
@@ -104,9 +102,7 @@ Where $g_{\xi}$ is the coupling coefficient for each mode.
 
 \section{Small Polaron Mobility from Hopping Rates}
 
-\subsection{Marcus Hopping Rate Equation}
-
-\subsection{Solving the Master Equation}
+% Write about Marcus hopping rate a bit here.
 
 The Master Equation for Charge transport is :
 
@@ -117,24 +113,23 @@ The Master Equation for Charge transport is :
 Where $\Gamma_{mn}$ refers to the transfer rate (Adiabatic / Marcus hopping rate) and $P_n$ refer to the populations of the various sites. To get the populations of the sites at steady-state, we can reformulate this into a matrix equation :
 
 \begin{equation}
-    A_{mn} = \[ \begin{cases} 
+    A_{mn} = \begin{cases} 
         \Gamma_{mn} & m\neq n \\
       -\sum_{m} \Gamma_{nm} & m = n \\ 
    \end{cases}
-\]
 \end{equation}
 
 Formulating this as a matrix equation :
 
 \begin{equation}
-    \textbf{A} \vec{P} = 0
+    \boldsymbol{A} \vec{P} = 0
 \end{equation}
 
 
 Which can be solved by determining the nullspace of the matrix A. To do this, we perform a Singular Value Decomposition (SVD) of the matrix A:
 
 \begin{equation}
-    \textbf{A} = \textbf{U \Sigma V}^{T}
+    \boldsymbol{A} = \boldsymbol{U \Sigma V}^{T}
 \end{equation}
 
 See Appendix C for more on Singular Value Decompositions.
@@ -145,11 +140,21 @@ When computing the mobility of electrons under an electric field, we have to inc
     \Delta E_{ij} = \epsilon_{i} - \epsilon_{j} - q \vec{F} . \vec{r}_{ij}
 \end{equation}
 
-Then, we use the Marcus hopping rate model to compute the elements of the matrix A  and find the populations of the states $P_m$ by performing an SVD on the matrix A. 
+Then, we use the Marcus hopping rate model to compute the elements of the matrix A  and find the populations of the states $P_m$ by performing an SVD on the matrix A. Here $\vec{r}_{ij}$ is the displacement vector from site i to site j.
 
-\subsection{Determining Mobility}
+From the rates and the occupation probabilities, we can determine the average velocity of charges:
 
+\begin{equation}
+\vec{v} = \sum_{m \neq n} \vec{r}_{mn} A_{mn} P_n 
+\end{equation}
 
+Then we can get the mobility using 
+\begin{equation}
+\mu = \frac{<v>}{F}
+\end{equation}
+
+Where $<v>$ is the average velocity in the direction of the field and F is the magnitude of the field.
+ 
 \section{Path Integral Treatment of Open Quantum Systems}
 
 % Why are path integrals useful for treating quantum systems.
@@ -227,7 +232,7 @@ To get the integrand to stop oscillating, we have to make the phase factor a rea
 One of the major issues with performing real-time path integral monte carlo simulations is the infamous sign problem, as mentioned earlier. 
 To alleviate the sign problem, we employ a method developed by Makri and co-workers \cite{quapi} to develop equations that converge when attempting to numerically sample discretized path integral expressions using Monte Carlo simulations.
 
-%\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
+\subsection{Quasi-Adiabatic Propagator Path Integral (QuAPI)}
 
  If we instead performed the Trotter decomposition as such : 
  \begin{equation}
@@ -265,15 +270,55 @@ Now we can propagate the reduced density matrix elements over time :
 
 \begin{equation}
 \begin{split}
-\rho(s, s', t) = & \int ds_0^{+} \int ds_1^{+} ... \int ds_{N-1}^{+} \int ds_{0}^{-} ... \int ds_{N-1}^{-} \\ &  <s'|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_{N-1}^{+}> ... <s_1^{+}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_0^{+}> \\ & <s_0^{+}|\rho(0)|s_0^{-}> <s_0^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_1^{-}> ...<s_{N-1}^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s>I(s', s, s_i^{+}, s_i^{-} ; \Delta t)
+\rho(s, s', t) = & \int ds_0^{+} \int ds_1^{+} ... \int ds_{N-1}^{+} \int ds_{0}^{-} ... \int ds_{N-1}^{-} \\ &  <s'|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_{N-1}^{+}> ... <s_1^{+}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_0^{+}> \\ & <s_0^{+}|\rho(0)|s_0^{-}> <s_0^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s_1^{-}> ...<s_{N-1}^{-}|e^{-i \mathscr{H}_{0} \Delta t / \hbar}|s>F(s', s, s_i^{+}, s_i^{-} ; \Delta t)
 \end{split}
 \end{equation}
 
-This is the Quasi-Adiabatic Propagator Path Integral (QuAPI) expression. Here $I$ represents the influence functional, capturing the effect of the reservoir \cite{feynman2000theory}. 
+This is the Quasi-Adiabatic Propagator Path Integral (QuAPI) expression. Here $F$ represents the influence functional, capturing the effect of the reservoir \cite{feynman2000theory}. 
 
 To sample the grid points, we perform a Monte Carlo random walk over a 2N dimensional grid, since we integrate over 2N dimensions considering both the forward and backward paths 
 
 \subsection{Quantum-Classical Path Integral (QCPI)}
+
+One way to help treat a system with a large number of degrees of freedom is to provide a classical description of the environment degrees of freedom (which emerge when there is large decoherence) \cite{makri2015quantum}. 
+
+We can re-write the open system Hamiltonian as a function of quantum mechanical system states and a classical phase space of the environment:
+
+\begin{equation}
+\mathcal{H} = \mathcal{H}_S(\hat{s}, \hat{p_s}) + \mathcal{H}_R(\mathbf{q}, \mathbf{p}) + \mathcal{H}_{int}(\hat{s}, \mathbf{q})
+\end{equation}
+
+Where $\hat{s}$ and $\hat{p_s}$ represent the quantum-mechanical system coordinate and positions, while \textbf{q} and \textbf{p} represent vectors of position and momenta degrees of freedom of a classical environment phase space.
+
+For the reduced density matrix (RDM), we write the quasi-adiabatic propagator path integral as:
+
+\begin{equation}
+    \rho(s_N^{+-}, t) = \int ds_{0}^{+-} ... \int ds_{N-1}^{+-} K_0(s_N^{+}, s_{N-1}^{+}) ... K_0(s_1^{+}, s_0^{+}) \rho(s_0^{+-}, 0)K_0(s_0^{-}, s_1^{-})...K_0(s_{N-1}^{-}, s_N^{-}) F(s_0^{+-}...s_N^{+-})
+\end{equation}
+
+For the QCPI representation we use the influence functional $F_{class}$ corresponding to a classical trajectory of the environment, starting from an initial $\mathbf{q_0}$, $\mathbf{p_0}$ :
+
+\begin{equation}
+    F_{class} = \int d\mathbf{q_0} \int d\mathbf{p_0} P(\mathbf{q_0}, \mathbf{p_0}) \exp(\frac{i}{\hbar} \Phi_{env}(\mathbf{q_0}, \mathbf{p_0}, s))
+\end{equation}
+
+Where P is the phase space density and $\Phi_{env}$ is the net forward-backward action for the path integral.
+
+For a system coupled to a harmonic bath with a linear coupling term, we can write the influence function as: 
+
+\begin{equation}
+    F = \exp[\frac{-1}{\hbar} \int_0^{t} dt' \int_{0}^{t'} dt'' (s^+(t') - s^-(t'))][\alpha(t' - t'')s^+(t'') - \alpha(t' - t'')^{*}s^-(t'')]
+\end{equation}
+
+Where the $\alpha$ function is a force auto-correlation of the bath. 
+
+For the classical trajectory, we use the solution of a classical forced harmonic oscillator :
+
+\begin{equation}
+    q_j(t) = q_{j,0}\cos(\omega_j t) + \frac{p_{j,0}}{m_j \omega_j} \sin(\omega_j t) + \frac{c_j}{2 m_j \omega_j} \int_0^{t} dt' \bar{s}(t')\sin(\omega_j)(t-t')
+\end{equation}
+
+Where $c_j$ is the linear coupling term and $\bar{s} = \frac{1}{2}(s^+ + s^-)$ 
 
 \subsection{Evaluating the Real-Time Path Integrals}
 
