@@ -107,7 +107,12 @@ Where $\ket{\psi_0}$ is the Hartree Fock ground state determinant. The most accu
 
 For many problems in chemistry, we are only interested in a small number of excited state properties. We can hence select an "Active Space" of orbitals which contains the properties of excitations we're interested in, typically some valence orbitals and few virtual orbitals. 
 
-% Complete Active Space diagram.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{Figures/CAS.png}
+    \caption{Complete Active Space}
+    \label{fig:enter-label}
+\end{figure}
 
 Within this active space, we can consider all possible excitations and since we're only choosing a small number of orbitals to work with, the number of excitations is not too large to perform our calculations. We can perform MCSCF calculations within this Active Space using all excitations, this is known as the Complete Active Space Self Consistent Field (CASSCF). Instead, if we perform a full CI calculation within the complete active space, it's called Complete Active Space Configuration Interaction or CASCI. We can also use the CASSCF result as a reference for performing 2nd or 4th order  M{\o}ller-Plesset perturbation theory calculations, which are the CASPT2 methods. 
 
